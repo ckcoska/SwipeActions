@@ -711,7 +711,15 @@ struct SwipeActionsLayout: _VariadicView_UnaryViewRoot {
 extension SwipeView {
     /// The total offset of the content.
     var offset: Double {
-        currentOffset + savedOffset
+        if numberOfLeadingActions > 0 {
+            return max(currentOffset + savedOffset, 0)
+        }
+        
+        if numberOfTrailingActions > 0 {
+            return min(currentOffset + savedOffset, 0)
+        }
+        
+        return 0
     }
 
     /// Calculate the total width for actions.
